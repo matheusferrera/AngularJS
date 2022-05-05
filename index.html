@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-<link href="/rainbow-master/themes/css/github.css" rel="stylesheet" type="text/css">
+<link href="./rainbow-master/themes/css/github.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="styles.css">
 <body>
 
@@ -84,7 +84,7 @@
                     First Name: <input type="text" ng-model="firstName"><br>
                     Last Name: <input type="text" ng-model="lastName"><br>
                     <br>
-                    Full Name: {{firstName + " " + lastName}}
+                    Full Name: {{fullName()}}
                 </div>
             </div>
             <div class="div_code">
@@ -93,14 +93,17 @@
             First Name: <input type="text" ng-model="firstName"><br>
             Last Name: <input type="text" ng-model="lastName"><br>
             <br>
-            Full Name: {{firstName + " " + lastName}}    
+            Full Name: {{fullName()}}    
         </div>
             
         <script>
             var app3 = angular.module('app3', []);
             app.controller('myCtrl', function($scope) {
-            $scope.firstName= "John";
-            $scope.lastName= "Doe";
+                $scope.firstName= "John";
+                $scope.lastName= "Doe";
+                $scope.fullName = function() {
+                    return $scope.firstName + " " + $scope.lastName;
+                };
             });
             angular.bootstrap(document.getElementById("app3"), ['app3']);
         </script>
@@ -234,7 +237,9 @@
     var app3 = angular.module('app3', []);
     app3.controller('myCtrl', function($scope) {
         $scope.firstName= "John";
-        $scope.lastName= "Doe";});   
+        $scope.lastName= "Doe";
+        $scope.fullName = function() {
+        return $scope.firstName + " " + $scope.lastName;};});   
     angular.bootstrap(document.getElementById("app3"), ['app3']);
 
 
