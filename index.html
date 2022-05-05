@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<link href="/rainbow-master/themes/css/github.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="styles.css">
+<body>
+
+    
+    <div class="container">
+        <h1 class="title">Itroducao AngularJS</h1>
+        <h2 class="subtitle">O angular necessita de uma div com a directiva de <b>'ng-app'</b> para funcionar, enquanto o <b>ng-model</b> esta vinculado ao valor HTML, seja ele do input, h1, textarea <b>ng-bind</b> vincula ao model</h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app1" id="app1">
+                    <p>Name: <input type="text" ng-model="name"></p>
+                    <p ng-bind="name"></p>
+                </div>
+            </div>
+            <div class="div_code">
+                <pre><code data-language="html">
+    <div ng-app="app1" id="app1">
+        <p>Name: <input ng-model="name"></p>
+        <p ng-bind="name"></p>
+    </div>
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Diretivas</h1>
+        <h2 class="subtitle">As diretivas do angular sempre irao comecar com <b>ng-</b> a diretiva de inicializacao e chamda de <b>ng-init</b> e um valor passado no inicio da criacao da div !LEMBRE-SE o <b>ng-bind</b> tem o mesmo valor que <b>{{expressao}}</b></h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app2" id="app2" ng-init="firstName='John'">
+                    <p>The name is <span>{{firstName}}</span></p>
+                    <p>The name is <span ng-bind="firstName"></span></p>
+                </div>
+            </div>
+            <div class="div_code">
+    <pre><code data-language="html">
+    <div ng-app="app2" id="app2" ng-init="firstName='John'">
+        <p>The name is <span>{{firstName}}</span></p>
+        <p>The name is <span ng-bind="firstName"></span></p>
+    </div>
+    </pre></code>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Expressoes</h1>
+        <h2 class="subtitle">Podemos declarar qualquer tipo de variavel como objetos, arrays entre outros, assim podendo inclusive alterar as propriedades css com expressoes </h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app4" id="app4" ng-init="myCol='lightblue'; person={firstName:'John',lastName:'Doe'}; points=[1,15,19,2,40]">
+                    <input style="background-color:{{myCol}}" ng-model="myCol">
+                    <p>The name is <span ng-bind="person.lastName"></span></p>
+                    <p>The third result is {{ points[2] }}</p>
+                </div>
+            </div>
+            <div class="div_code">
+    <pre><code data-language="html">
+    <div ng-app="app4" id="app4" ng-init="myCol='lightblue'; 
+    person={firstName:'John',lastName:'Doe'}; points=[1,15,19,2,40]">
+
+        <input style="background-color:{{myCol}}" ng-model="myCol">
+        <p>The name is <span ng-bind="person.lastName"></span></p>
+        <p>The third result is {{ points[2] }}</p>
+
+    </div>
+    </pre></code>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Criacao de modulos</h1>
+        <h2 class="subtitle">Para definir um novo <b>ng-app</b> precisamos utilziar o <b>angular.module</b> (como possuimos mais de um ng-app na pagina precisamos fazer o bootstrap) ja para controlar a aplicacao utilizamos o <b>ng-controller</b> utilizando o <b>var.controller</b></h2>
+        <h2 class="subtitle">Podemos utilizar tbm o <b>controller</b> para para substituir o <b>ng-init</b> utilizando o <b>ng-model</b></h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app3" id="app3" ng-controller="myCtrl">
+                    First Name: <input type="text" ng-model="firstName"><br>
+                    Last Name: <input type="text" ng-model="lastName"><br>
+                    <br>
+                    Full Name: {{firstName + " " + lastName}}
+                </div>
+            </div>
+            <div class="div_code">
+    <pre><code data-language="html">
+        <div ng-app="app3" id="app3" ng-controller="myCtrl">
+            First Name: <input type="text" ng-model="firstName"><br>
+            Last Name: <input type="text" ng-model="lastName"><br>
+            <br>
+            Full Name: {{firstName + " " + lastName}}    
+        </div>
+            
+        <script>
+            var app3 = angular.module('app3', []);
+            app.controller('myCtrl', function($scope) {
+            $scope.firstName= "John";
+            $scope.lastName= "Doe";
+            });
+            angular.bootstrap(document.getElementById("app3"), ['app3']);
+        </script>
+    </pre></code>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Criacao de modulos com diretivas proprias</h1>
+        <h2 class="subtitle">Podemos criar tags proprias assim como no react</h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app6" id="app6">
+                    <minha-tag></minha-tag>
+                    <div minha-tag></div>
+                </div>
+            </div>
+            <div class="div_code">
+    <pre><code data-language="html">
+<div ng-app="app6" id="app6">
+    <minha-tag></minha-tag>
+    <div minha-tag></div>
+</div>
+
+<script>
+    var app6 = angular.module("app6", []);
+    app6.directive("minhaTag", function() {
+        return {
+            template : "<h1>Made by a directive!</h1>"
+        };});
+</script>
+    </pre></code>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Loop</h1>
+        <h2 class="subtitle">podemos fazer um for utilizando o comeando <b>ng-repeat</b></h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app5" id="app5" ng-init="names=[
+                {name:'Jani',country:'Norway'},
+                {name:'Hege',country:'Sweden'},
+                {name:'Kai',country:'Denmark'}]">
+                    <ul>
+                        <li ng-repeat="x in names">{{ x.name + ', ' + x.country }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="div_code">
+    <pre><code data-language="html">
+    <div ng-app="app5" id="app5" ng-init="names=[
+    {name:'Jani',country:'Norway'},
+    {name:'Hege',country:'Sweden'},
+    {name:'Kai',country:'Denmark'}]">
+        <ul>
+            <li ng-repeat="x in names">{{ x.name + ', ' + x.country }}</li>
+        </ul>
+    </div>
+    </pre></code>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Validacao de form</h1>
+        <h2 class="subtitle">Podemos utilizar varios parametros para validacao <b>do MODEL!</b> </h2>
+        <div class="row">
+            <div class="content">
+                <style>
+                    #app7_input.ng-valid { background-color: lightblue; }
+                    #app7_input.ng-invalid { background-color: red; }
+                </style>
+                <form ng-app="app7" id="app7"a name="myForm" ng-init="myText = 'post@myweb.com'">
+
+                    Email:
+                    <input id="app7_input" type="email" name="myAddress" ng-model="myText" required>
+                    <p>Edit the e-mail address, and try to change the status.</p>
+                    <h1>Status</h1>
+                    <p>Valid: {{myForm.myAddress.$valid}} (if true, the value meets all criteria).</p>
+                    <p>Dirty: {{myForm.myAddress.$dirty}} (if true, the value has been changed).</p>
+                    <p>Touched: {{myForm.myAddress.$touched}} (if true, the field has been in focus).</p>
+                    
+                </form>
+            </div>
+            <div class="div_code">
+                <pre><code data-language="html">
+<style>
+    #app7_input.ng-valid {background-color: lightblue;}
+    #app7_input.ng-invalid {background-color: red;}
+</style>
+
+<form ng-app="app7" id="app7" name="myForm" ng-init="myText = 'post@myweb.com'">
+
+    Email:
+    <input type="email" id="app7_input" name="myAddress" ng-model="myText">
+    <p>Edit the e-mail address, and try to change the status.</p>
+    <h1>Status</h1>
+    <p>
+        Valid: {{myForm.myAddress.$valid}} 
+        (if true, the value meets all criteria).
+    </p>
+    <p>
+        Dirty: {{myForm.myAddress.$dirty}} 
+        (if true, the value has been changed).
+    </p>
+    <p>
+        Touched: {{myForm.myAddress.$touched}} 
+        (if true, the field has been in focus).
+    </p>
+
+</form>
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    var app1 = angular.module("app1", [])
+
+
+    var app2 = angular.module("app2", [])
+    angular.bootstrap(document.getElementById("app2"), ['app2']);
+
+
+    var app3 = angular.module('app3', []);
+    app3.controller('myCtrl', function($scope) {
+        $scope.firstName= "John";
+        $scope.lastName= "Doe";});   
+    angular.bootstrap(document.getElementById("app3"), ['app3']);
+
+
+    var app4 = angular.module("app4", [])
+    angular.bootstrap(document.getElementById("app4"), ['app4']);
+
+
+    var app5 = angular.module("app5", [])
+    angular.bootstrap(document.getElementById("app5"), ['app5']);
+
+    var app6 = angular.module("app6", []);
+    app6.directive("minhaTag", function() {
+        return {
+            template : "<h1>Made by a directive!</h1>"
+        };
+    });
+    angular.bootstrap(document.getElementById("app6"), ['app6']);
+
+    var app7 = angular.module("app7", [])
+    angular.bootstrap(document.getElementById("app7"), ['app7']);
+</script>
+<script src="rainbow-custom.min.js"></script>
+</html>
