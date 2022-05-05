@@ -176,8 +176,8 @@
         <div class="row">
             <div class="content">
                 <style>
-                    #app7_input.ng-valid { background-color: lightblue; }
-                    #app7_input.ng-invalid { background-color: red; }
+                    #app7_input.ng-valid { background-color: lightblue; transition: 1s }
+                    #app7_input.ng-invalid { background-color: red; transition: 1s; }
                 </style>
                 <form ng-app="app7" id="app7"a name="myForm" ng-init="myText = 'post@myweb.com'">
 
@@ -223,6 +223,45 @@
         </div>
     </div>
 
+    <div class="container">
+        <h1 class="title">Filtro</h1>
+        <h2 class="subtitle">Podemos utilizar filtros, como ordernamento, limit, json e etc. Voce tambem pode criar seus <b>proprios filtros</b></h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app8" id="app8" ng-controller="namesCtrl">
+                    <p>Comeca com "a" setado, escreva para ver a lista</p>
+                    <p><input type="text" ng-model="name"></p> 
+                    <ul>
+                        <li ng-repeat="x in names | filter:name | orderBy:x">
+                            {{ x }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="div_code">
+                <pre><code data-language="html">
+    <div ng-app="app8" id="app8" ng-controller="namesCtrl">
+        <p>Comeca com "a" setado, escreva para ver a lista</p>
+        <p><input type="text" ng-model="name"></p> 
+        <ul>
+            <li ng-repeat="x in names | filter:name | orderBy:x" >
+                {{ x }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var app8 = angular.module("app8", [])
+        angular.module('app8', []).controller('namesCtrl', function($scope) {
+            $scope.name = "a";
+            $scope.names = ['Jani','Carl','Margareth','Hege','Joe','Gustav']
+        });
+    </script>
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
 
 
 </body>
@@ -260,6 +299,23 @@
 
     var app7 = angular.module("app7", [])
     angular.bootstrap(document.getElementById("app7"), ['app7']);
+
+    var app8 = angular.module("app8", [])
+    angular.module('app8', []).controller('namesCtrl', function($scope) {
+    $scope.name = "a";
+    $scope.names = [
+        'Jani',
+        'Carl',
+        'Margareth',
+        'Hege',
+        'Joe',
+        'Gustav',
+        'Birgit',
+        'Mary',
+        'Kai'
+        ];
+    });
+    angular.bootstrap(document.getElementById("app8"), ['app8']);
 </script>
 <script src="rainbow-custom.min.js"></script>
 </html>
