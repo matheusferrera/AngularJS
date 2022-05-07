@@ -4,6 +4,7 @@ body {
 }
 
 .container {
+    transition: 1s;
     border: rgb(166, 166, 166) solid 1px;
     margin-bottom: 20px;
     padding: 20px;
@@ -51,3 +52,15 @@ body {
 pre{
     border: none;
 }
+
+table, th , td  {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+  }
+  table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+  table tr:nth-child(even) {
+    background-color: #ffffff;
+  }

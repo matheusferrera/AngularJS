@@ -150,9 +150,16 @@
                 {name:'Jani',country:'Norway'},
                 {name:'Hege',country:'Sweden'},
                 {name:'Kai',country:'Denmark'}]">
-                    <ul>
-                        <li ng-repeat="x in names">{{ x.name + ', ' + x.country }}</li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Pais</th>
+                        </tr>
+                        <tr ng-repeat="x in names">
+                            <td>{{x.name}}</td>
+                            <td>{{x.country}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="div_code">
@@ -161,9 +168,16 @@
     {name:'Jani',country:'Norway'},
     {name:'Hege',country:'Sweden'},
     {name:'Kai',country:'Denmark'}]">
-        <ul>
-            <li ng-repeat="x in names">{{ x.name + ', ' + x.country }}</li>
-        </ul>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Pais</th>
+            </tr>
+            <tr ng-repeat="x in names">
+                <td>{{x.name}}</td>
+                <td>{{x.country}}</td>
+            </tr>
+        </table>
     </div>
     </pre></code>
             </div>
@@ -262,6 +276,89 @@
         </div>
     </div>
 
+    <div class="container">
+        <h1 class="title">HTTP com angular</h1>
+        <h2 class="subtitle">Como nao liguei o servidor nao esta fazendo nenhuma requisicao.</h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app9" id="app9" ng-controller="myCtrl">
+                    <p>Today's welcome message is:</p>
+                    <h1>{{myWelcome}}</h1>
+                </div>
+            </div>
+            <div class="div_code">
+                <pre><code data-language="html">
+        <div ng-app="app9" id="app9" ng-controller="myCtrl">
+            <p>Today's welcome message is:</p>
+            <h1>{{names.name}}</h1>
+        </div>
+
+        <script>
+            var app9 = angular.module('app9', []);
+            app9.controller('customersCtrl', function($scope, $http) {
+            $http.get("customers_mysql.php")
+            .then(function (response) {$scope.names = response.data.records;});
+            });
+        </script>
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Events</h1>
+        <h2 class="subtitle">Events sao utilziados para perceber "movimentos" na pagina, como <b>clique (ng-click)</b>, <b>foco (ng-focus)</b>, <b>mudanca (ng-change)</b> e etc. Podendo passar a funcao diretamente no parametro (sem a necessidade de declarar funcao)</h2>
+        <div class="row">
+            <div class="content">
+                <div ng-app="app10" id="app10" ng-controller="myCtrl">
+                    <h1 ng-mousemove="count = count + 1">Mouse over me!</h1>
+                    <h2>{{ count }}</h2>
+                    <button ng-click="myFunc()">Click Me!</button>
+                    <div ng-show="showMe">
+                        <h1>Menu:</h1>
+                        <div>Pizza</div>
+                        <div>Pasta</div>
+                        <div>Pesce</div>
+                    </div>
+                    <h1 ng-mousemove="myFunc2($event)">Mouse Over Me!</h1>
+                    <p>Coordinates: {{x + ' -- ' + y}}</p>
+                </div>
+            </div>
+            <div class="div_code">
+                <pre><code data-language="html">
+    <div ng-app="app10" id="app10" ng-controller="myCtrl">
+        <h1 ng-mousemove="count = count + 1">Mouse over me!</h1>
+        <h2>{{ count }}</h2>
+        <div ng-show="showMe">
+            <h1>Menu:</h1>
+            <div>Pizza</div>
+            <div>Pasta</div>
+            <div>Pesce</div>
+        </div>
+        <h1 ng-mousemove="myFunc2($event)">Mouse Over Me!</h1>
+        <p>Coordinates: {{x + ' -- ' + y}}</p>
+    </div>
+
+    <script>
+        var app10 = angular.module("app10", [])
+        var app = angular.module('myApp', []);
+        app10.controller('myCtrl', function($scope) {
+            $scope.count = 0;         
+            $scope.showMe = false;
+            $scope.myFunc = function() {
+                $scope.showMe = !$scope.showMe;
+            }
+            $scope.myFunc2 = function(myE) {
+                $scope.x = myE.clientX;
+                $scope.y = myE.clientY;
+            }
+        });
+    </script>
+                </code></pre>
+            </div>
+        </div>
+    </div>
+
 
 
 </body>
@@ -316,6 +413,31 @@
         ];
     });
     angular.bootstrap(document.getElementById("app8"), ['app8']);
+
+    var app9 = angular.module('app9', []);
+    app9.controller('myCtrl', function($scope, $http) {
+        $http.get("welcome.htm")
+        .then(function(response) {
+            $scope.myWelcome = response.data;
+        });
+    });
+    angular.bootstrap(document.getElementById("app9"), ['app9']);
+
+    var app10 = angular.module("app10", [])
+    var app = angular.module('myApp', []);
+    app10.controller('myCtrl', function($scope) {
+        $scope.count = 0;
+        $scope.showMe = false;
+        $scope.myFunc = function() {
+            $scope.showMe = !$scope.showMe;
+        }
+        $scope.myFunc2 = function(myE) {
+            $scope.x = myE.clientX;
+            $scope.y = myE.clientY;
+        }
+    });
+    angular.bootstrap(document.getElementById("app10"), ['app10']);
+
 </script>
 <script src="rainbow-custom.min.js"></script>
 </html>
